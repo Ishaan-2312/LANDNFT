@@ -1,6 +1,7 @@
 package com.PseudoNerds.LandNFT.Controller;
 
 import com.PseudoNerds.LandNFT.Entity.LandDetails;
+import com.PseudoNerds.LandNFT.Entity.User;
 import com.PseudoNerds.LandNFT.Service.LandDetailsService;
 import com.PseudoNerds.LandNFT.Service.LandRegisterService;
 import org.slf4j.Logger;
@@ -42,6 +43,16 @@ public class LandController {
         Optional<LandDetails> landDetails=landDetailsService.getLandDetailsByPropertyId(propertyId);
         if(!landDetails.isEmpty()){ return ResponseEntity.ok(landDetails);}
         return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+
+    }
+
+    @GetMapping("/getUserByPropertyId")
+    public ResponseEntity<Optional<User>> getUserByPropertyId(@RequestParam String propertyId)throws Exception{
+        Optional<User> user=landDetailsService.getUserByPropertyId(propertyId);
+        if(!user.isEmpty()){
+            return ResponseEntity.ok(user);
+        }
+        return new ResponseEntity<>(HttpStatusCode.valueOf(404));
 
     }
 }

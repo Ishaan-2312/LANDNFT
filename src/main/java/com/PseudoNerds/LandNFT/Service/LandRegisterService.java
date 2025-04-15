@@ -2,6 +2,7 @@ package com.PseudoNerds.LandNFT.Service;
 
 import com.PseudoNerds.LandNFT.Entity.LandDetails;
 import com.PseudoNerds.LandNFT.Entity.TransactionHash;
+import com.PseudoNerds.LandNFT.Entity.User;
 import com.PseudoNerds.LandNFT.Repository.LandRepository;
 import com.PseudoNerds.LandNFT.Repository.TransactionRepository;
 import com.PseudoNerds.LandNFT.Web3Service.BlockchainService;
@@ -111,6 +112,8 @@ public class LandRegisterService {
         return true;
 
     }
+
+
 
 
 

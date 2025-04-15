@@ -17,6 +17,8 @@ import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.request.Transaction;
+import org.web3j.protocol.core.methods.response.EthEstimateGas;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Numeric;
@@ -48,15 +50,27 @@ public class LandTransferService {
 
 
     @Transactional
-    public String transferLand(LandTransfer landTransfer,String privateKey)throws Exception{
+    public String transferLand(LandTransfer landTransfer,String privateKey)throws Exception {
 
         Long tokenId = landTransfer.getTokenId();
         String toAddress = landTransfer.getToAddress();
 
         // Load credentials of sender (msg.sender)
         Credentials credentials = Credentials.create(privateKey);
-        BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice();
-        BigInteger gasLimit = DefaultGasProvider.GAS_LIMIT;
+        // Instead of fixed gas limit
+        BigInteger gasLimit = BigInteger.valueOf(300_000);
+
+// Use dynamic estimation
+        String encodedFunction = null;
+        EthEstimateGas estimateGas = web3j.ethEstimateGas(
+                Transaction.createEthCallTransaction(
+                        credentials.getAddress(),
+                        contractAddress,
+                        encodedFunction
+                )
+        ).send();
+        BigInteger gasPrice = estimateGas.getAmountUsed();
+
 
         // Get nonce
         BigInteger nonce = web3j.ethGetTransactionCount(
@@ -71,7 +85,7 @@ public class LandTransferService {
                 Collections.emptyList()
         );
 
-        String encodedFunction = FunctionEncoder.encode(function);
+        encodedFunction = FunctionEncoder.encode(function);
 
         // Build raw transaction
         RawTransaction transaction = RawTransaction.createTransaction(
@@ -98,8 +112,8 @@ public class LandTransferService {
         landTransfer.setTransferTimestamp(LocalDateTime.now());
         landTransferRepository.save(landTransfer);
 
-        String transactionHash= response.getTransactionHash();
-        TransactionHash transactionHash1=new TransactionHash(landTransfer.getPropertyId(),transactionHash);
+        String transactionHash = response.getTransactionHash();
+        TransactionHash transactionHash1 = new TransactionHash(landTransfer.getPropertyId(), transactionHash);
         transactionRepository.save(transactionHash1);
 
 

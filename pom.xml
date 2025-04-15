@@ -49,6 +49,27 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -82,6 +103,37 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.web3j</groupId>-->
+<!--				<artifactId>web3j-maven-plugin</artifactId>-->
+<!--				<version>4.9.4</version>-->
+<!--				<configuration>-->
+<!--					<solcVersion>0.8.29</solcVersion>  &lt;!&ndash; Specify the correct version here &ndash;&gt;-->
+<!--					<packageName>com.PseudoNerds.LandNFT.contract</packageName>-->
+<!--					<sourceDestination>${project.build.directory}/generated-sources/web3j</sourceDestination>-->
+<!--					<nativeJavaType>true</nativeJavaType>-->
+<!--					<outputFormat>java</outputFormat>-->
+<!--					<soliditySourceFiles>-->
+<!--						<directory>${project.basedir}/smartcontracts</directory>-->
+<!--						<includes>-->
+<!--							<include>**/*.sol</include>-->
+<!--						</includes>-->
+<!--					</soliditySourceFiles>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>generate-wrappers</id>-->
+<!--						<goals>-->
+<!--							<goal>generate-sources</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+
+
+
+
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
