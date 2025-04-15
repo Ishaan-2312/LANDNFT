@@ -23,6 +23,9 @@ public class UserService {
 
     public void registerUser(User user){
 //        String pass=user.getPassword();
+//        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+//            throw new IllegalArgumentException("Password must not be null or empty");
+//        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -58,8 +61,8 @@ public class UserService {
         userRepository.delete(user1);
     }
 
-    public Optional<User> getUserByownerWalletAddress(String ownerWalletAddress) {
-        Optional<User> user=userRepository.getUserByownerWalletAddress(ownerWalletAddress);
+    public Set<Optional<User>> getUserByownerWalletAddress(String ownerWalletAddress) {
+        Set<Optional<User>> user=userRepository.getUserByownerWalletAddress(ownerWalletAddress);
         return user;
     }
 }

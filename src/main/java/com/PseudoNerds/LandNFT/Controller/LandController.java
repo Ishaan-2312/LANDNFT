@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/Land")
@@ -47,8 +48,8 @@ public class LandController {
     }
 
     @GetMapping("/getUserByPropertyId")
-    public ResponseEntity<Optional<User>> getUserByPropertyId(@RequestParam String propertyId)throws Exception{
-        Optional<User> user=landDetailsService.getUserByPropertyId(propertyId);
+    public ResponseEntity<Set<Optional<User>>> getUserByPropertyId(@RequestParam String propertyId)throws Exception{
+        Set<Optional<User>> user=landDetailsService.getUserByPropertyId(propertyId);
         if(!user.isEmpty()){
             return ResponseEntity.ok(user);
         }

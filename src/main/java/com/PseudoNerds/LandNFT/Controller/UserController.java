@@ -2,7 +2,9 @@ package com.PseudoNerds.LandNFT.Controller;
 
 import com.PseudoNerds.LandNFT.Entity.LandDetails;
 import com.PseudoNerds.LandNFT.Entity.User;
+import com.PseudoNerds.LandNFT.Repository.UserRepository;
 import com.PseudoNerds.LandNFT.Service.UserService;
+import com.PseudoNerds.LandNFT.Util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,24 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user){
+    public ResponseEntity<String> registerUser(@RequestBody User user){
+        Optional<User> user1=userRepository.findByownerWalletAddress(user.getOwnerWalletAddress());
+        if(!user1.isEmpty())return new ResponseEntity<>(HttpStatusCode.valueOf(402));
         userService.registerUser(user);
-        return ResponseEntity.ok(user);
+        String username= user.getUsername();
+        String password=user.getPassword();
+        String token= jwtUtil.generateToken(username,password);
+        if(jwtUtil.isTokenValid(token)) return  ResponseEntity.ok( token);
+
+        return new ResponseEntity<>(HttpStatusCode.valueOf(402));
     }
 
     @GetMapping("/getUserById")

@@ -11,9 +11,9 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET_KEY="<Your Secret Key>";
+    private static final Key SECRET_KEY= Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private static final long EXPIRATION_TIME=86000000;
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private final Key key = SECRET_KEY;
 
     public String generateToken(String email,String role){
         return Jwts.builder()
@@ -54,7 +54,7 @@ public class JwtUtil {
                     .getBody();
             return true;
         }catch (  IllegalArgumentException e) {
-            /* If an exception occurs, the token is invalid */
+
             return false;
         }
     }

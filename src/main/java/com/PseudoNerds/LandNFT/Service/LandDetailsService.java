@@ -31,11 +31,11 @@ public class LandDetailsService {
         return landRepository.findByownerWalletAddress(ownerWalletAddress);
     }
 
-    public Optional<User> getUserByPropertyId(String propertyId) throws Exception{
+    public Set<Optional<User>> getUserByPropertyId(String propertyId) throws Exception{
         Optional<LandDetails> landDetails=getLandDetailsByPropertyId(propertyId);
         LandDetails landDetails1=landDetails.get();
         String ownerWalletAddress=landDetails1.getOwnerWalletAddress();
-        Optional<User> user=userService.getUserByownerWalletAddress(ownerWalletAddress);
+        Set<Optional<User>> user=userService.getUserByownerWalletAddress(ownerWalletAddress);
         return user;
 
     }
