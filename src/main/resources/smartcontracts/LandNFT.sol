@@ -25,7 +25,9 @@ contract LandOwnershipNFT is ERC721URIStorage, Ownable {
     event LandRegistered(uint256 indexed tokenId, string propertyId, address owner);
     event LandTransferred(uint256 indexed tokenId, address indexed from, address indexed to);
 
-    constructor() ERC721("Real Estate Land Ownership", "RELO") Ownable(msg.sender) {}
+    constructor() ERC721("Real Estate Land Ownership", "RELO")
+//    Ownable(msg.sender)
+    {}
 
     function registerLand(
         address to,
@@ -66,8 +68,8 @@ contract LandOwnershipNFT is ERC721URIStorage, Ownable {
         _landDetails[tokenId].latitudeLongitude = newLatitudeLongitude;
     }
 
-    function _exists(uint256 tokenId) internal view returns (bool) {
-        return _ownerOf(tokenId) != address(0);
+    function _exists(uint256 tokenId) internal view override returns (bool) {
+        return ownerOf(tokenId) != address(0);
     }
 
     // Simple helper function to update registered owner when tokens are transferred

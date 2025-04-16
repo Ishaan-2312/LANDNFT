@@ -107,7 +107,30 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-<!--			<plugin>-->
+
+			<plugin>
+				<groupId>org.web3j</groupId>
+				<artifactId>web3j-maven-plugin</artifactId>
+				<version>4.8.7</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate-sources</goal>
+						</goals>
+						<configuration>
+							<packageName>com.pseudoNerds.LandNFT.contracts</packageName>
+							<binFile>${project.basedir}/build/LandNFT_sol_LandOwnershipNFT.bin</binFile>
+							<abiFile>${project.basedir}/build/LandNFT_sol_LandOwnershipNFT.abi</abiFile>
+							<outputDir>${project.basedir}/src/main/java</outputDir>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+			<!--			<plugin>-->
 <!--				<groupId>org.web3j</groupId>-->
 <!--				<artifactId>web3j-maven-plugin</artifactId>-->
 <!--				<version>4.9.4</version>-->

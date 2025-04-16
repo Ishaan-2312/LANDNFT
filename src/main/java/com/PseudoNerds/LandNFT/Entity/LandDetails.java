@@ -23,7 +23,8 @@ public class LandDetails {
     private String ownerWalletAddress;
     @Column(nullable = true)
     private String tokenURI;
-    private Long tokenId;
+//    @Column(nullable = true)
+//    private Long tokenId;
     private LocalDateTime registrationDate;
 
     public LandDetails(long areaSqMeters, Long id, String latitudeLongitude, String ownerWalletAddress, String propertyId, LocalDateTime registrationDate, Long tokenId, String tokenURI) {
@@ -33,7 +34,7 @@ public class LandDetails {
         this.ownerWalletAddress = ownerWalletAddress;
         this.propertyId = propertyId;
         this.registrationDate = registrationDate;
-        this.tokenId = tokenId;
+//        this.tokenId = tokenId;
         this.tokenURI = tokenURI;
     }
 
@@ -93,13 +94,13 @@ public class LandDetails {
         this.registrationDate = registrationDate;
     }
 
-    public Long getTokenId() {
-        return tokenId;
-    }
-
-    public void setTokenId(Long tokenId) {
-        this.tokenId = tokenId;
-    }
+//    public Long getTokenId() {
+//        return tokenId;
+//    }
+//
+//    public void setTokenId(Long tokenId) {
+//        this.tokenId = tokenId;
+//    }
 
     public String getTokenURI() {
         return tokenURI;

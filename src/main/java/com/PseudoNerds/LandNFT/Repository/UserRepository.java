@@ -13,4 +13,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Set<Optional<User>> getUserByownerWalletAddress(String ownerWalletAddress);
 
     Optional<User> findByownerWalletAddress(String ownerWalletAddress);
+
+    Optional<User> getUserByusername(String username);
+
+    User findByusername(String username);
 }

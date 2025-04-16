@@ -27,14 +27,14 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user){
+    public ResponseEntity<User> registerUser(@RequestBody User user){
         Optional<User> user1=userRepository.findByownerWalletAddress(user.getOwnerWalletAddress());
         if(!user1.isEmpty())return new ResponseEntity<>(HttpStatusCode.valueOf(402));
         userService.registerUser(user);
         String username= user.getUsername();
         String password=user.getPassword();
         String token= jwtUtil.generateToken(username,password);
-        if(jwtUtil.isTokenValid(token)) return  ResponseEntity.ok( token);
+        if(jwtUtil.isTokenValid(token)) return  ResponseEntity.ok(user);
 
         return new ResponseEntity<>(HttpStatusCode.valueOf(402));
     }
@@ -51,10 +51,10 @@ public class UserController {
     @GetMapping("/getLandDetailsById")
     public ResponseEntity<Set<Optional<LandDetails>>> getLandDetailsById(@RequestParam Long id)throws Exception{
         Set<Optional<LandDetails>> st=userService.getLandDetailsById(id);
-        if(st.size()>0) {
+
             return ResponseEntity.ok(userService.getLandDetailsById(id));
-        }
-        return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+
+//        return new ResponseEntity<>(HttpStatusCode.valueOf(404));
     }
 
     @PutMapping("/updateUser")
@@ -66,6 +66,14 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@RequestParam Long id){
          userService.deleteUser(id);
          return ResponseEntity.ok("Deleted User");
+
+    }
+
+    @GetMapping("/getUserByOwnerWalletaddress")
+    public ResponseEntity<Optional<User>> getUserByWalletAddress(@RequestParam String ownerWalletAddress){
+        Optional<User> user=userRepository.findByownerWalletAddress(ownerWalletAddress);
+        if(!user.isEmpty())return ResponseEntity.ok(user);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(404));
 
     }
 
